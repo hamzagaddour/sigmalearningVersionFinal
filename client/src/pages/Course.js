@@ -18,6 +18,7 @@ import FileDownload from "js-file-download";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { create } from "../features/chapter";
+import { notInitialized } from "react-redux/es/utils/useSyncExternalStore";
 
 const Course = () => {
   const state = useSelector((state) => state.course.value);
@@ -100,11 +101,11 @@ const Course = () => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "block" }}>
       <CssBaseline />
       <AppBar
-        color="secondary"
-        position="fixed"
+        color="inherit"
+        position="relative"
         sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
       >
         <Toolbar>
@@ -120,12 +121,13 @@ const Course = () => {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
+            top: 130,
           },
         }}
         variant="permanent"
         anchor="left"
       >
-        <Toolbar />
+        
         <Divider />
         <List>
           {chapters.map((chapter, index) => (
@@ -151,7 +153,7 @@ const Course = () => {
 
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
+        sx={{ marginLeft: 35,flexGrow: 1, bgcolor: "background.default", p: 0 }}
       >
         <Toolbar />
         <Typography paragraph>

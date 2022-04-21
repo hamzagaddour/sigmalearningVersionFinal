@@ -6,16 +6,16 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import LocalLibraryRoundedIcon from "@mui/icons-material/LocalLibraryRounded";
-import { Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useSelector } from 'react-redux'
-
-
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../features/user";
 
 export default function ButtonAppBar() {
-
-  const user = useSelector((state)=> state.user.value);
-  const logged = user.logged 
+  const user = useSelector((state) => state.user.value);
+  const logged = user.logged;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const theme = createTheme({
     palette: {
@@ -25,6 +25,17 @@ export default function ButtonAppBar() {
       },
     },
   });
+
+  const logoutHandler = () => {
+    //event.preventDefault();
+    dispatch(
+      logout({
+        logged: false,
+      })
+    );
+
+    navigate("/");
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -45,30 +56,37 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Sigma Learning
           </Typography>
-         
-          
-         
-            <ThemeProvider theme={theme}>
-            {!logged ? (<>
+
+          <ThemeProvider theme={theme}>
+            {!logged ? (
+              <>
+                <Button
+                  href="/login"
+                  sx={{ margin: 1 }}
+                  variant="contained"
+                  color="neutral"
+                >
+                  Login
+                </Button>
+                <Button
+                  href="/register"
+                  color="neutral"
+                  sx={{ margin: 1 }}
+                  variant="contained"
+                >
+                  Sing Up
+                </Button>
+              </>
+            ) : (
               <Button
-                href="/login"
-                sx={{ margin: 1 }}
+                onClick={(e) => logoutHandler()}
                 variant="contained"
                 color="neutral"
               >
-                Login
+                Log Out
               </Button>
-              <Button
-                href="/register"
-                color="neutral"
-                sx={{ margin: 1 }}
-                variant="contained"
-              >
-                Sing Up
-              </Button>
-            </> ) : ("")}
-            </ThemeProvider>
-          
+            )}
+          </ThemeProvider>
         </Toolbar>
       </AppBar>
     </Box>

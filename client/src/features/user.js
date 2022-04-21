@@ -16,8 +16,8 @@ export const userSlice = createSlice({
         register : (state, action)=>{
             state.value = action.payload
         },
-        logout : ()=>{
-            localStorage.removeItem('user')
+        logout : (state, action)=>{
+            state.value = action.payload
         } 
     }
 })

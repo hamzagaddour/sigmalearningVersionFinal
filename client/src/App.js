@@ -19,6 +19,7 @@ function App() {
         <nav>
           <Navbar />
         </nav>
+        
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -27,6 +28,7 @@ function App() {
           <Route path="/course" element={<Course/>}/>
           <Route path="/qcm" element={<Qcm/>}/>
         </Routes>
+        
       </BrowserRouter>
     </Provider>
   );
