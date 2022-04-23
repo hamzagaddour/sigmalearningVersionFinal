@@ -7,10 +7,13 @@ export const userSlice = createSlice({
         lastName :"",
         email : "",
         password :"",
-        logged : false
+        logged : false,
+        admin: false,
+        teacher: false,
     }},
     reducers : {
         login : (state, action)=>{
+
             state.value = action.payload
         },
         register : (state, action)=>{

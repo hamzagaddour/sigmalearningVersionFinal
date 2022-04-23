@@ -10,10 +10,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/user";
+import Chip from "@mui/material/Chip";
+import Avatar from "@mui/material/Avatar";
 
 export default function ButtonAppBar() {
   const user = useSelector((state) => state.user.value);
   const logged = user.logged;
+  //const name = user.email;
+  console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -78,13 +82,24 @@ export default function ButtonAppBar() {
                 </Button>
               </>
             ) : (
-              <Button
-                onClick={(e) => logoutHandler()}
-                variant="contained"
-                color="neutral"
-              >
-                Log Out
-              </Button>
+              <>
+                <Chip
+                sx={{margin: 1}}
+                  label={user.firstName+" "+user.lastName}
+                  color="primary"
+                  component="a"
+                  href="#"
+                  variant="filled"
+                  clickable
+                />
+                <Button
+                  onClick={(e) => logoutHandler()}
+                  variant="contained"
+                  color="neutral"
+                >
+                  Log Out
+                </Button>
+              </>
             )}
           </ThemeProvider>
         </Toolbar>

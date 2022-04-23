@@ -26,7 +26,16 @@ var userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true
+    },
+    admin:{
+      type: Boolean,
+      default: false,
+    },
+    teacher:{
+      type: Boolean,
+      default: false,
     }
+
   },
   { timestamps: true }
 );

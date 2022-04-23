@@ -6,10 +6,10 @@ const mongoose = require("mongoose");
 
 exports.getQuestion =(req, res)=>{
     //res.status(200).json({message: "hello world question"})
-    //console.log(req.params.qcmID)
-    let qcmID = req.params.qcmID
+    console.log(req.params.qcmID)
+    let qcmId = req.params.qcmID
 
-    Question.find({ qcmID }, (error, data) => {
+    Question.find({ qcmId }, (error, data) => {
         if (error || !Question) {
           return res.status(400).json({
             error: "Question Does Not Exists",

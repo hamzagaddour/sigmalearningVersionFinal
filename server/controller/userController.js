@@ -28,6 +28,7 @@ exports.register = (req, res) => {
       email: userData.email,
       password: userData.password,
       id: userData._id,
+      admin: false,
     });
   });
 };
@@ -123,7 +124,36 @@ exports.login = (req, res) => {
       });
     }
 
-    const { _id, name, email } = user;
-    return res.status(200).json({ _id, name, email });
+    //const { _id, name, email } = user;
+    return res.status(200).json({ user });
   });
 };
+
+
+//getAllLearner
+exports.getAllLearner = (req, res) => {
+  User.find({admin: false, teacher: false}).exec((error, userData) => {
+    if (error) {
+      return res.status(400).json({
+        error: "No User Found",
+      });
+    }
+
+    res.json(userData);
+  });
+};
+
+
+//getAllTeacher
+exports.getAllTeacher = (req, res) => {
+  User.find({teacher: true}).exec((error, userData) => {
+    if (error) {
+      return res.status(400).json({
+        error: "No User Found",
+      });
+    }
+
+    res.json(userData);
+  });
+};
+

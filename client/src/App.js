@@ -9,6 +9,8 @@ import { store } from "./app/store";
 import { Provider } from "react-redux";
 import Course from "./pages/Course";
 import Qcm from "./pages/Qcm";
+import Admin from "./pages/Admin";
+import Teacher from './pages/Teacher'
 
 
 
@@ -27,6 +29,8 @@ function App() {
           <Route path="/profile" element={<Profile/>}/>
           <Route path="/course" element={<Course/>}/>
           <Route path="/qcm" element={<Qcm/>}/>
+          <Route path="/admin" element={<Admin/>}/>
+          <Route path="/teacher" element={<Teacher/>}/>
         </Routes>
         
       </BrowserRouter>

@@ -52,7 +52,7 @@ const Profile = () => {
             sx={{
               display: "inline-block",
               margin: 4,
-              padding: 4,
+              padding: 10,
               width: 275,
               height: 450,
             }}
@@ -78,7 +78,7 @@ const Profile = () => {
                 variant="outlined"
                 color="error"
                 onClick={() => handleCourse(course)}
-                size="small"
+                size="large"
               >
                 Learn More
               </Button>
