@@ -18,6 +18,7 @@ import {
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import { Box } from "@mui/system";
+import DialogTest from "../teacher/componentsTeacher/DialogUpdate";
 
 const AdminListLearner = () => {
   const [users, setUsers] = useState();
@@ -172,120 +173,10 @@ const AdminListLearner = () => {
       });
   };
 
-  const SimpleDialogLearner = (props) => {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  
 
-    const { idLearner,onClose, selectedValueUpdate, openLearnerUpdate } = props;
-    console.log(idLearner)
-    const handleCloseUpdate = () => {
-      onClose(selectedValueUpdate);
-    };
-
-    const handleAddLearner = () => {
-      console.log(idLearner)
-      //console.log(firstName + lastName + email + password);
-      axios({
-        method: "PUT",
-        url: "http://localhost:5000/api/updateuserbyid/" + idLearner,
-        data: {
-          id: idLearner,
-          name: firstName,
-          lastName: lastName,
-          email: email,
-          password: password,
-        },
-      })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      onClose(selectedValueUpdate);
-    };
-
-    return (
-      <Dialog
-        PaperProps={{
-          style: {
-            width: 500,
-            height: 600,
-          },
-        }}
-        onClose={handleCloseUpdate}
-        open={openLearnerUpdate}
-      >
-        <DialogTitle component="form" noValidate sx={{ marginLeft: 20 }}>
-          Update Learner
-        </DialogTitle>
-
-        <List>
-          <ListItem>
-            <Box style={{ display: "inline-grid" }}>
-            <TextField
-                sx={{ width: 450, margin: 1 }}
-                id="firstNameUpdate"
-                label="FirstName"
-                variant="standard"
-                name="firstNameUpdate"
-                fullWidth
-                onChange={(e) => {
-                setFirstName(e.target.value);
-                }}
-              />
-              <TextField
-                sx={{ width: 450, margin: 1 }}
-                id="lastNameUpdate"
-                label="LastName"
-                variant="standard"
-                name="lastNameUpdate"
-                fullWidth
-                onChange={(e) => {
-                  setLastName(e.target.value);
-                }}
-              />
-              <TextField
-                sx={{ width: 450, margin: 1 }}
-                id="emailUpdate"
-                label="Email"
-                variant="standard"
-                name="emailUpdate"
-                type="email"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-              <TextField
-                sx={{ width: 450, margin: 1 }}
-                id="passwordUpdate"
-                label="Password"
-                variant="standard"
-                name="passwordUpdate"
-                type="password"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-              <Button
-                sx={{ margin: 1 }}
-                variant="contained"
-                onClick={(e)=>handleAddLearner()}
-              >
-                UpDate
-              </Button>
-            </Box>
-          </ListItem>
-        </List>
-      </Dialog>
-    );
-  };
-
-  const handleCloseUpdate = (value) => {
+  const handleCloseUpdate = () => {
     setOpenLearnerUpdate(false);
-    setSlectedValueUpdate(value);
   };
 
   return (
@@ -302,6 +193,11 @@ const AdminListLearner = () => {
         slectedValue={selectedValue}
         open={open}
         onClose={handleClose}
+      />
+      <DialogTest
+        selectedValueUpdate={selectedValueUpdate}
+        open={openLearnerUpdate}
+        onClose={handleCloseUpdate}
       />
 
       <TableContainer component={Paper}>
@@ -326,15 +222,13 @@ const AdminListLearner = () => {
                 </TableCell>
                 <TableCell>
               
-                  <Button onClick={(e) => setOpenLearnerUpdate(true)}>                
+                  <Button onClick={() => {
+                            setSlectedValueUpdate(user);
+                            setOpenLearnerUpdate(true);
+                          }}>                
                     <AutoFixHighIcon />
                   </Button>
-                  <SimpleDialogLearner
-                      idLearner={user._id}
-                      selectedValueUpdate={selectedValueUpdate}
-                      openLearnerUpdate={openLearnerUpdate}
-                      onClose={handleCloseUpdate}
-                    />
+                  
                 
                 </TableCell>
               </TableRow>
