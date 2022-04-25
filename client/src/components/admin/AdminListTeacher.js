@@ -15,19 +15,18 @@ import {
   ListItem,
   TextField,
 } from "@mui/material";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Box } from "@mui/system";
 
-const AdminListLearner = () => {
-  const [users, setUsers] = useState();
+const AdminListTeacher = () => {
+  const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
-  
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/getalllearner")
+      .get("http://localhost:5000/api/getallteacher")
       .then((res) => {
         console.log(res);
         setUsers(res.data);
@@ -36,45 +35,38 @@ const AdminListLearner = () => {
         console.log(err);
       });
   }, []);
-  
 
   function SimpleDialog(props) {
-
-
-    const [firstName, setFirstName]=useState('')
-    const [lastName, setLastName]=useState('')
-    const [email, setEmail]=useState('')
-    const [password, setPassword]=useState('')
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const { onClose, selectedValue, open } = props;
     const handleClose = () => {
       onClose(selectedValue);
     };
 
-   
-
     const handleAddLearner = () => {
-    //console.log(firstName + lastName + email + password);
-    axios({
-      method: "POST",
-      url: "http://localhost:5000/api/createuser",
-      data: {
-        name: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-      },
-    })
-      .then(function (response) {
-        console.log(response);
+      //console.log(firstName + lastName + email + password);
+      axios({
+        method: "POST",
+        url: "http://localhost:5000/api/createuser",
+        data: {
+          name: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+        },
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       onClose(selectedValue);
-    }
-
-
+    };
 
     return (
       <Dialog
@@ -87,56 +79,69 @@ const AdminListLearner = () => {
         onClose={handleClose}
         open={open}
       >
-        <DialogTitle component="form"
-            noValidate sx={{ marginLeft: 20 }}>Add Learner</DialogTitle>
+        <DialogTitle component="form" noValidate sx={{ marginLeft: 20 }}>
+          Add Teacher
+        </DialogTitle>
 
         <List>
           <ListItem>
             <Box style={{ display: "inline-grid" }}>
               <TextField
                 sx={{ width: 450, margin: 1 }}
-                id="firstName"
+                id="firstNameLearnerAdd"
                 label="FirstName"
                 variant="standard"
-                name="firstName"
+                name="firstNameLearnerAdd"
                 autoComplete="given-name"
                 required
                 fullWidth
                 autoFocus
-                onChange={(e)=>{setFirstName(e.target.value)}}
+                onChange={(e) => {
+                  setFirstName(e.target.value);
+                }}
               />
               <TextField
                 sx={{ width: 450, margin: 1 }}
-                id="lastName"
+                id="lastNameLearnerAdd"
                 label="LastName"
                 variant="standard"
-                name="lastName"
+                name="lastNameLearnerAdd"
                 autoComplete="given-name"
                 required
                 fullWidth
                 autoFocus
-                onChange={(e)=>{setLastName(e.target.value)}}
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                }}
               />
               <TextField
                 sx={{ width: 450, margin: 1 }}
-                id="email"
+                id="emailLearnerAdd"
                 label="Email"
                 variant="standard"
-                name="email"
+                name="emailLearnerAdd"
                 autoComplete="email"
-                onChange={(e)=>{setEmail(e.target.value)}}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
               <TextField
                 sx={{ width: 450, margin: 1 }}
-                id="password"
+                id="passwordLearnerAdd"
                 label="Password"
                 variant="standard"
-                name="password"
+                name="passwordLearnerAdd"
                 autoComplete="new-password"
                 type="password"
-                onChange={(e)=>{setPassword(e.target.value)}}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
               />
-              <Button sx={{ margin: 1 }} variant="contained" onClick={handleAddLearner}>
+              <Button
+                sx={{ margin: 1 }}
+                variant="contained"
+                onClick={handleAddLearner}
+              >
                 Add
               </Button>
             </Box>
@@ -151,12 +156,11 @@ const AdminListLearner = () => {
     setSelectedValue(value);
   };
 
-  const handleDelete = (idUser)=>{
-    console.log(idUser)
+  const handleDelete = (idUser) => {
+    console.log(idUser);
     axios({
       method: "delete",
       url: "http://localhost:5000/api/removeuserbyid/" + idUser,
-      
     })
       .then(function (response) {
         console.log(response);
@@ -164,18 +168,18 @@ const AdminListLearner = () => {
       .catch(function (error) {
         console.log(error);
       });
+  };
 
-  }
   return (
     <>
       <>
         <Button
-          onClick={() => setOpen(true)}
           sx={{ margin: 3 }}
           color="success"
           variant="contained"
+          onClick={() => setOpen(true)}
         >
-          Add Learner
+          Add Teacher
         </Button>
         <SimpleDialog
           slectedValue={selectedValue}
@@ -184,6 +188,7 @@ const AdminListLearner = () => {
         />
       </>
 
+      <br />
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
@@ -194,13 +199,21 @@ const AdminListLearner = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users?.map((row) => (
+            {users.map((row) => (
               <TableRow key={row._id}>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.lastName}</TableCell>
                 <TableCell>{row.email}</TableCell>
-                <TableCell><Button onClick={()=>handleDelete(row._id)}><DeleteForeverIcon/></Button></TableCell>
-                <TableCell><Button><AutoFixHighIcon/></Button></TableCell>
+                <TableCell>
+                  <Button onClick={() => handleDelete(row._id)}>
+                    <DeleteForeverIcon />
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  <Button>
+                    <AutoFixHighIcon />
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -210,4 +223,4 @@ const AdminListLearner = () => {
   );
 };
 
-export default AdminListLearner;
+export default AdminListTeacher;

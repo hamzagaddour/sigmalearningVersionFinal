@@ -1,5 +1,6 @@
 const User = require("../model/userModel");
 const { check, validationResult } = require("express-validator");
+const { default: mongoose } = require("mongoose");
 // var jwt = require("jsonwebtoken");
 // var expressJwt = require("express-jwt");
 
@@ -82,22 +83,25 @@ exports.removeUser = (req, res) => {
   });
 };
 //to update user
-exports.updateUser = (req, res) => {
-  const user = req.user;
-  user.name = req.body.name;
-  user.lastName = req.body.lastName;
-  user.email = req.body.email;
-  user.password = req.body.password;
+exports.updateUser = (req, res) => 
+{
+   const user = new User();
+   user._id = req.body.id
+   user.name = req.body.name;
+   user.lastName = req.body.lastName;
+   user.email = req.body.email;
+   console.log(user)
+   //const {name,lastName,email, password} = req.body
+   var consditions = {_id: req.body.id}
 
-  user.save((error, updatedUser) => {
-    if (error) {
-      return res.status(400).json({
-        error: "Failed To Update User",
-      });
-    }
-    res.json(updatedUser);
-  });
-};
+   User.updateOne(consditions, req.body).then(doc => {
+     if(!doc){return res.status(404).end();}
+     return res.status(200).json(doc);
+   }).catch(err=>next(err));
+   
+
+ 
+   };
 
 //login user
 exports.login = (req, res) => {

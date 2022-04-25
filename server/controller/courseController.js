@@ -7,7 +7,7 @@ const Course = require("../model/courseModel");
   exports.createCourse = (req, res) => 
   {
     const course = new Course(req.body);
-    course.image = req.file.path; 
+    //course.image = req.file.path; 
  
   course.save((error, course) => 
   {

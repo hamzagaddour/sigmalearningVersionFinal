@@ -10,9 +10,9 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import AdminListCourse from "../components/AdminListCourse";
-import AdminListTeacher from "../components/AdminListTeacher";
-import AdminListLearner from "../components/AdminListLearner";
+import AdminListCourse from "../components/admin/AdminListCourse";
+import AdminListTeacher from "../components/admin/AdminListTeacher";
+import AdminListLearner from "../components/admin/AdminListLearner";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const drawerWidth = 240;
@@ -54,7 +54,7 @@ export default function PermanentDrawerLeft() {
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-            Dashboard
+           Admin Dashboard
           </Typography>
         </Toolbar>
       </AppBar>

@@ -28,7 +28,7 @@ router.get("/userbyid/:userId", getUser)  //http://localhost:5000/api/userbyid/
 //Remove User
 router.delete("/removeuserbyid/:userId",removeUser); //http://localhost:5000/api/removeuserbyid/
 //Update User 
-router.put("/updateuserbyid/:userId", updateUser); //http://localhost:5000/api/updateuserbyid/
+router.put("/updateuserbyid/:idLearner", updateUser); //http://localhost:5000/api/updateuserbyid/ 
 //Login User
 router.post("/login",         //http://localhost:5000/api/login
   [

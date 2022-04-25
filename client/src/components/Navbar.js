@@ -41,6 +41,24 @@ export default function ButtonAppBar() {
     navigate("/");
   };
 
+  const handleRoute = () => {
+    console.log(user)
+    let admin = user.admin
+    let teacher = user.teacher
+    console.log(admin)
+    
+    console.log(teacher)
+    if (admin === true) {
+      navigate("/admin");
+    } else if (teacher === true) {
+      navigate("/teacher");
+    } else if (admin && teacher === true) {
+      navigate("/admin");
+    } else {
+      navigate("/profile");
+    }
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -84,11 +102,11 @@ export default function ButtonAppBar() {
             ) : (
               <>
                 <Chip
-                sx={{margin: 1}}
-                  label={user.firstName+" "+user.lastName}
+                  sx={{ margin: 1 }}
+                  label={user.firstName + " " + user.lastName}
                   color="primary"
                   component="a"
-                  href="#"
+                  onClick={(e)=>handleRoute()}
                   variant="filled"
                   clickable
                 />
