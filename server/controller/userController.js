@@ -25,7 +25,7 @@ exports.register = (req, res) => {
 
     res.json({
       name: userData.name,
-      lastName : userData.lastName,
+      lastName: userData.lastName,
       email: userData.email,
       password: userData.password,
       id: userData._id,
@@ -83,25 +83,25 @@ exports.removeUser = (req, res) => {
   });
 };
 //to update user
-exports.updateUser = (req, res) => 
-{
-   const user = new User();
-   user._id = req.body.id
-   user.name = req.body.name;
-   user.lastName = req.body.lastName;
-   user.email = req.body.email;
-   console.log(user)
-   //const {name,lastName,email, password} = req.body
-   var consditions = {_id: req.body.id}
+exports.updateUser = (req, res) => {
+  const user = new User();
+  user._id = req.body.id;
+  user.name = req.body.name;
+  user.lastName = req.body.lastName;
+  user.email = req.body.email;
+  console.log(user);
+  //const {name,lastName,email, password} = req.body
+  var consditions = { _id: req.body.id };
 
-   User.updateOne(consditions, req.body).then(doc => {
-     if(!doc){return res.status(404).end();}
-     return res.status(200).json(doc);
-   }).catch(err=>next(err));
-   
-
- 
-   };
+  User.updateOne(consditions, req.body)
+    .then((doc) => {
+      if (!doc) {
+        return res.status(404).end();
+      }
+      return res.status(200).json(doc);
+    })
+    .catch((err) => next(err));
+};
 
 //login user
 exports.login = (req, res) => {
@@ -133,10 +133,9 @@ exports.login = (req, res) => {
   });
 };
 
-
 //getAllLearner
 exports.getAllLearner = (req, res) => {
-  User.find({admin: false, teacher: false}).exec((error, userData) => {
+  User.find({ admin: false, teacher: false }).exec((error, userData) => {
     if (error) {
       return res.status(400).json({
         error: "No User Found",
@@ -146,11 +145,10 @@ exports.getAllLearner = (req, res) => {
     res.json(userData);
   });
 };
-
 
 //getAllTeacher
 exports.getAllTeacher = (req, res) => {
-  User.find({teacher: true}).exec((error, userData) => {
+  User.find({ teacher: true }).exec((error, userData) => {
     if (error) {
       return res.status(400).json({
         error: "No User Found",
@@ -160,4 +158,3 @@ exports.getAllTeacher = (req, res) => {
     res.json(userData);
   });
 };
-

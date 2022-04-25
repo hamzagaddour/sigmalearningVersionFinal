@@ -21,6 +21,7 @@ const {
         updateCourse,
     } = require("../controller/courseController");
 
+    
 router.param("courseId", getCoursebyId); //param : parameter
 router.post("/course/create/",createCourse);  //http://localhost:5000/api/course/create/
 //router.post("/createcourse",upload.single('courseImage'),createCourse);

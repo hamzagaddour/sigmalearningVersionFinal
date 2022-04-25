@@ -95,19 +95,22 @@ const Course = require("../model/courseModel");
   //to update course
  exports.updateCourse = (req, res) => 
  {
-  const course = req.course;
+  const course = new Course();
+  course._id = req.body.id;
   course.name = req.body.name;
-  course.image = req.body.image;
-  course.description = req.body.description;
-  course.duration = req.body.duration;
-  
- 
-       course.save((error, updatedCourse) => {
-         if(error) {
-           return res.status(400).json({
-             error: "Failed To Update Course"
-           });
-         }
-         res.json(updatedCourse);
-       });
+  course.lastName = req.body.description;
+  course.email = req.body.duration;
+  console.log(course);
+
+  var consditions = { _id: req.body.id };
+
+  Course.updateOne(consditions, req.body)
+    .then((doc) => {
+      if (!doc) {
+        return res.status(404).end();
+      }
+      return res.status(200).json(doc);
+    })
+    .catch((err) => next(err));
+
     };

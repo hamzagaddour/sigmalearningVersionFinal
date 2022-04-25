@@ -18,12 +18,16 @@ import {
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Box } from "@mui/system";
+import DialogeUpdateCourse from './componentsTeacher/DialogUpdateCourse'
 
 const AdminListCourse = () => {
   const [courses, setCourses] = useState([]);
 
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValueUpdate, setSelectedValueUpdate] = useState("");
+  const [openCourseUpdate ,setOpenCourseUpdate] = useState(false)
+
 
   useEffect(() => {
     axios
@@ -171,7 +175,9 @@ const AdminListCourse = () => {
         console.log(error);
       });
   };
-
+  const handleCloseUpdate = () => {
+    setOpenCourseUpdate(false);
+  };
   return (
     <>
       <>
@@ -179,6 +185,7 @@ const AdminListCourse = () => {
           sx={{ margin: 3 }}
           variant="contained"
           onClick={() => setOpen(true)}
+          color="success"
         >
           Add Course
         </Button>
@@ -187,6 +194,11 @@ const AdminListCourse = () => {
           open={open}
           onClose={handleClose}
         />
+              <DialogeUpdateCourse
+        selectedValueUpdate={selectedValueUpdate}
+        open={openCourseUpdate}
+        onClose={handleCloseUpdate}
+      />
       </>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
@@ -207,7 +219,10 @@ const AdminListCourse = () => {
                     </Button>
                   </TableCell>
                   <TableCell>
-                    <Button>
+                    <Button onClick={() => {
+                            setSelectedValueUpdate(course);
+                            setOpenCourseUpdate(true);
+                          }}>
                       <AutoFixHighIcon />
                     </Button>
                   </TableCell>
