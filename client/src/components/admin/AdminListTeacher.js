@@ -18,18 +18,21 @@ import {
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Box } from "@mui/system";
+import DialogTest from "../teacher/componentsTeacher/DialogUpdate";
 
 const AdminListTeacher = () => {
-  const [users, setUsers] = useState([]);
+  const [teachers, setTeachers] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
+  const [openLearnerUpdate, setOpenLearnerUpdate] = useState(false);
+  const [selectedValueUpdate, setSlectedValueUpdate] = useState("");
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/getallteacher")
       .then((res) => {
         console.log(res);
-        setUsers(res.data);
+        setTeachers(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -57,6 +60,7 @@ const AdminListTeacher = () => {
           lastName: lastName,
           email: email,
           password: password,
+          teacher : true,
         },
       })
         .then(function (response) {
@@ -170,6 +174,61 @@ const AdminListTeacher = () => {
       });
   };
 
+  function disableUser(teacherId){
+    console.log(teacherId)
+    axios({
+      method: "PUT",
+      url: "http://localhost:5000/api/desactiverlearnerbyid/" + teacherId,
+      data: {
+        id: teacherId,
+        activer: false
+      },
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  
+  function enableUser(teacherId){
+    console.log(teacherId)
+    axios({
+      method: "PUT",
+      url: "http://localhost:5000/api/activerlearnerbyid/" + teacherId,
+      data: {
+        id: teacherId,
+        activer: true
+      },
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const handleSwitch = (teacher) => {
+    console.log(teacher)
+    console.log('trigged student status updating');
+    console.log(teacher);
+  
+    if(teacher.activer === true){
+      console.log('trigger disable user action')
+      disableUser(teacher._id)
+    } else {
+      console.log('trigger activate user action')
+      enableUser(teacher._id)
+    }
+    
+  };
+
+  const handleCloseUpdate = () => {
+    setOpenLearnerUpdate(false);
+  };
+
   return (
     <>
       <>
@@ -186,6 +245,11 @@ const AdminListTeacher = () => {
           open={open}
           onClose={handleClose}
         />
+        <DialogTest
+        selectedValueUpdate={selectedValueUpdate}
+        open={openLearnerUpdate}
+        onClose={handleCloseUpdate}
+      />
       </>
 
       <br />
@@ -196,21 +260,32 @@ const AdminListTeacher = () => {
               <TableCell>Name</TableCell>
               <TableCell>LastName</TableCell>
               <TableCell>Email</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Supprimer</TableCell>
+              <TableCell>Modifier</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((row) => (
-              <TableRow key={row._id}>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.lastName}</TableCell>
-                <TableCell>{row.email}</TableCell>
+            {teachers.map((teacher) => (
+              <TableRow key={teacher._id}>
+                <TableCell>{teacher.name}</TableCell>
+                <TableCell>{teacher.lastName}</TableCell>
+                <TableCell>{teacher.email}</TableCell>
+                <TableCell key={teacher._id}>
+                <Button variant="outlined" color="primary" onClick={e => handleSwitch(teacher)}>
+                          {(teacher.activer === true ? ("DESACTIVER") : ("ACTIVER"))}
+                    </Button>
+                </TableCell>
                 <TableCell>
-                  <Button onClick={() => handleDelete(row._id)}>
+                  <Button onClick={() => handleDelete(teacher._id)}>
                     <DeleteForeverIcon />
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Button>
+                  <Button onClick={() => {
+                      setSlectedValueUpdate(teacher);
+                      setOpenLearnerUpdate(true);
+                    }}>
                     <AutoFixHighIcon />
                   </Button>
                 </TableCell>

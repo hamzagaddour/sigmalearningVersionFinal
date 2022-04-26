@@ -34,6 +34,14 @@ var userSchema = new mongoose.Schema(
     teacher:{
       type: Boolean,
       default: false,
+    },
+    logged:{
+      type: Boolean,
+      default: false
+    },
+    activer:{
+      type: Boolean,
+      default:false,
     }
 
   },

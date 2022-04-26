@@ -13,12 +13,13 @@ import ListItemText from "@mui/material/ListItemText";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import TeacherListLearner from "../components/teacher/TeacherListLearner";
 import TeacherListCourse from "../components/teacher/TeacherListCourse";
+import TeacherDefaultPage from "../components/teacher/TeacherDefaultPage";
 
 const drawerWidth = 240;
 
 export default function PermanentDrawerLeft() {
 
-    const [currentNavDisplay, setCurrentNavDisplay] = useState()
+    const [currentNavDisplay, setCurrentNavDisplay] = useState(<TeacherDefaultPage/>)
 
 
 
@@ -26,7 +27,6 @@ export default function PermanentDrawerLeft() {
   const handleNavAdmin = (text, index) => {
     //console.log(text);
     //console.log(index);
-
     switch (text) {
 
       case "List Learner":
@@ -35,8 +35,9 @@ export default function PermanentDrawerLeft() {
       case "List Course":
         setCurrentNavDisplay(<TeacherListCourse/>);
         break;
-      default:
-        setCurrentNavDisplay("rien afficher");
+        default:
+          setCurrentNavDisplay()
+          break;
     }
   };
 

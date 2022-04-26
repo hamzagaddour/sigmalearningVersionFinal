@@ -180,6 +180,57 @@ const AdminListLearner = () => {
     setOpenLearnerUpdate(false);
   };
 
+  function disableUser(learnerId){
+    console.log(learnerId)
+    axios({
+      method: "PUT",
+      url: "http://localhost:5000/api/desactiverlearnerbyid/" + learnerId,
+      data: {
+        id: learnerId,
+        activer: false
+      },
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  
+  function enableUser(learnerId){
+    console.log(learnerId)
+    axios({
+      method: "PUT",
+      url: "http://localhost:5000/api/activerlearnerbyid/" + learnerId,
+      data: {
+        id: learnerId,
+        activer: true
+      },
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const handleSwitch = (learner) => {
+    console.log(learner)
+    console.log('trigged student status updating');
+    console.log(learner);
+  
+    if(learner.activer === true){
+      console.log('trigger disable user action')
+      disableUser(learner._id)
+    } else {
+      console.log('trigger activate user action')
+      enableUser(learner._id)
+    }
+    
+  };
+
   return (
     <Fragment>
       <Button
@@ -209,6 +260,9 @@ const AdminListLearner = () => {
               <TableCell>Name</TableCell>
               <TableCell>LastName</TableCell>
               <TableCell>Email</TableCell>
+              {/*<TableCell>Status</TableCell>*/}
+              <TableCell>Modifier</TableCell>
+              <TableCell>Supprimer</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -220,6 +274,11 @@ const AdminListLearner = () => {
                     <TableCell>{learner.name}</TableCell>
                     <TableCell>{learner.lastName}</TableCell>
                     <TableCell>{learner.email}</TableCell>
+                    {/**<TableCell key={learner._id}>
+                <Button variant="outlined" color="primary" onClick={e => handleSwitch(learner)}>
+                          {(learner.activer === true ? ("DESACTIVER") : ("ACTIVER"))}
+                    </Button>
+                </TableCell>*/}
                     <TableCell>
                       <>
                         <Button

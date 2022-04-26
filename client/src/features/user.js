@@ -10,6 +10,7 @@ export const userSlice = createSlice({
         logged : false,
         admin: false,
         teacher: false,
+        activer: false,
     }},
     reducers : {
         login : (state, action)=>{
@@ -21,7 +22,7 @@ export const userSlice = createSlice({
         },
         logout : (state, action)=>{
             state.value = action.payload
-        } 
+        },
     }
 })
 

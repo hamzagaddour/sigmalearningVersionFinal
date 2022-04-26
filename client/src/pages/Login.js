@@ -50,8 +50,6 @@ export default function SignIn() {
     let email = data.get("email");
     let password = data.get("password");
 
-
-
     axios({
       method: "POST",
       url: "http://localhost:5000/api/login",
@@ -62,34 +60,33 @@ export default function SignIn() {
     })
       .then(function (response) {
         console.log(response);
-        
+
         dispatch(
           login({
             firstName: response.data.user.name,
-            lastName : response.data.user.lastName,
+            lastName: response.data.user.lastName,
             email: email,
             password: password,
             logged: true,
             admin: response.data.user.admin,
-            teacher : response.data.user.teacher,
+            teacher: response.data.user.teacher,
+            activer: response.data.user.activer,
           })
         );
 
-        if (response.data.user.admin===true){
-
-          navigate('/admin')
-
-        }else if (response.data.user.teacher===true){
-          navigate("/teacher");
-        }else{
-          navigate('/profile')
-        }
+        if (response.data.user.activer === true) {
+          if (response.data.user.admin === true) {
+            navigate("/admin");
+          } else if (response.data.user.teacher === true) {
+            navigate("/teacher");
+          } else {
+            navigate("/profile");
+          }
+        } 
       })
       .catch(function (error) {
         console.log(error);
       });
-
-
   };
 
   return (

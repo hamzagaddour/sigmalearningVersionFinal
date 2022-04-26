@@ -205,6 +205,8 @@ const AdminListCourse = () => {
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
+              <TableCell>Supprimer</TableCell>
+              <TableCell>Modifier</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

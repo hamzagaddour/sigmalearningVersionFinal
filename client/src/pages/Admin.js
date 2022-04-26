@@ -14,12 +14,13 @@ import AdminListCourse from "../components/admin/AdminListCourse";
 import AdminListTeacher from "../components/admin/AdminListTeacher";
 import AdminListLearner from "../components/admin/AdminListLearner";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import TeacherDefaultPage from "../components/teacher/TeacherDefaultPage";
 
 const drawerWidth = 240;
 
 export default function PermanentDrawerLeft() {
 
-    const [currentNavDisplay, setCurrentNavDisplay] = useState()
+    const [currentNavDisplay, setCurrentNavDisplay] = useState(<TeacherDefaultPage/>)
 
 
 

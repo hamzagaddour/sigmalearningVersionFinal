@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const { check } = require("express-validator");
-const {getAllTeacher ,getAllLearner ,register,getAllUser,getUserbyId,getUser,removeUser,updateUser,login } = require("../controller/userController");
+const {desactiverLearner,activerLearner,getAllTeacher ,getAllLearner ,register,getAllUser,getUserbyId,getUser,removeUser,updateUser,login } = require("../controller/userController");
 
 //Register User
 router.post("/createuser",    //http://localhost:5000/api/createuser
@@ -16,6 +16,10 @@ router.post("/createuser",    //http://localhost:5000/api/createuser
 );
 
 
+//update statu of learner
+router.put("/activerlearnerbyid/:idLearner", activerLearner)//http://localhost:5000/api/updatelearnerbyid/
+//update statu of learner
+router.put("/desactiverlearnerbyid/:idLearner", desactiverLearner)//http://localhost:5000/api/updatelearnerbyid/
 //getallteacher
 router.get("/getallteacher", getAllTeacher)//http://localhost:5000/api/getallteacher
 //getalllearner

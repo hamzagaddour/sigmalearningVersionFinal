@@ -18,12 +18,12 @@ import {
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Box } from "@mui/system";
-import DialogeUpdateCourse from '../teacher/componentsTeacher/DialogUpdateCourse'
+import DialogeUpdateCourse from "../teacher/componentsTeacher/DialogUpdateCourse";
 
 const AdminListCourse = () => {
   const [courses, setCourses] = useState([]);
   const [selectedValueUpdate, setSelectedValueUpdate] = useState("");
-  const [openCourseUpdate ,setOpenCourseUpdate] = useState(false)
+  const [openCourseUpdate, setOpenCourseUpdate] = useState(false);
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
 
@@ -52,7 +52,7 @@ const AdminListCourse = () => {
 
     const handleAddCourse = () => {
       //console.log(name + image + description + duration);
-      
+
       axios({
         method: "POST",
         url: "http://localhost:5000/api/course/create/",
@@ -69,7 +69,7 @@ const AdminListCourse = () => {
         .catch(function (error) {
           console.log(error);
         });
-        onClose(selectedValue);
+      onClose(selectedValue);
     };
 
     return (
@@ -89,7 +89,7 @@ const AdminListCourse = () => {
 
         <List>
           <ListItem>
-          <Box style={{ display: "inline-grid" }}>
+            <Box style={{ display: "inline-grid" }}>
               <TextField
                 sx={{ width: 450, margin: 1 }}
                 id="name"
@@ -194,10 +194,10 @@ const AdminListCourse = () => {
           onClose={handleClose}
         />
         <DialogeUpdateCourse
-        selectedValueUpdate={selectedValueUpdate}
-        open={openCourseUpdate}
-        onClose={handleCloseUpdate}
-      />
+          selectedValueUpdate={selectedValueUpdate}
+          open={openCourseUpdate}
+          onClose={handleCloseUpdate}
+        />
       </>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
@@ -209,21 +209,23 @@ const AdminListCourse = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {courses?.map((course) => (
+            {courses.map((course) => (
               <TableRow key={course._id}>
                 <TableCell>{course.name}</TableCell>
                 <TableCell>{course.description}</TableCell>
                 <TableCell>{course.duration}</TableCell>
                 <TableCell>
-                  <Button onClick={()=>handleDelete(course._id)}>
+                  <Button onClick={() => handleDelete(course._id)}>
                     <DeleteForeverIcon />
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Button onClick={() => {
-                            setSelectedValueUpdate(course);
-                            setOpenCourseUpdate(true);
-                          }}>
+                  <Button
+                    onClick={() => {
+                      setSelectedValueUpdate(course);
+                      setOpenCourseUpdate(true);
+                    }}
+                  >
                     <AutoFixHighIcon />
                   </Button>
                 </TableCell>
@@ -237,4 +239,3 @@ const AdminListCourse = () => {
 };
 
 export default AdminListCourse;
-

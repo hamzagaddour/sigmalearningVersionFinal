@@ -20,12 +20,13 @@ import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import { Box } from "@mui/system";
 import DialogTest from "../teacher/componentsTeacher/DialogUpdate";
 
+
 const AdminListLearner = () => {
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
-  const [openLearnerUpdate, setOpenLearnerUpdate] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
-  const [selectedValueUpdate, setSlectedValueUpdate] = useState("")
+  const [openLearnerUpdate, setOpenLearnerUpdate] = useState(false);
+  const [selectedValueUpdate, setSlectedValueUpdate] = useState("");
 
   useEffect(() => {
     axios
@@ -38,6 +39,59 @@ const AdminListLearner = () => {
         console.log(err);
       });
   }, []);
+
+  function disableUser(learnerId){
+    console.log(learnerId)
+    axios({
+      method: "PUT",
+      url: "http://localhost:5000/api/desactiverlearnerbyid/" + learnerId,
+      data: {
+        id: learnerId,
+        activer: false
+      },
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  
+  function enableUser(learnerId){
+    console.log(learnerId)
+    axios({
+      method: "PUT",
+      url: "http://localhost:5000/api/activerlearnerbyid/" + learnerId,
+      data: {
+        id: learnerId,
+        activer: true
+      },
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const handleSwitch = (learner) => {
+    console.log(learner)
+    console.log('trigged student status updating');
+    console.log(learner);
+  
+    if(learner.activer === true){
+      console.log('trigger disable user action')
+      disableUser(learner._id)
+    } else {
+      console.log('trigger activate user action')
+      enableUser(learner._id)
+    }
+    
+  };
+
+
 
   function SimpleDialog(props) {
     const [firstName, setFirstName] = useState("");
@@ -173,8 +227,6 @@ const AdminListLearner = () => {
       });
   };
 
-  
-
   const handleCloseUpdate = () => {
     setOpenLearnerUpdate(false);
   };
@@ -207,29 +259,36 @@ const AdminListLearner = () => {
               <TableCell>Name</TableCell>
               <TableCell>LastName</TableCell>
               <TableCell>Email</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Supprimer</TableCell>
+              <TableCell>Modifier</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users?.map((user) => (
+            {users.map((user, index) => (
               <TableRow key={user._id}>
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.lastName}</TableCell>
                 <TableCell>{user.email}</TableCell>
+                <TableCell key={user._id}>
+                <Button variant="outlined" color="primary" onClick={e => handleSwitch(user)}>
+                          {(user.activer === true ? ("DESACTIVER") : ("ACTIVER"))}
+                    </Button>
+                </TableCell>
                 <TableCell>
                   <Button onClick={(e) => handleDelete(user._id)}>
                     <DeleteForeverIcon />
                   </Button>
                 </TableCell>
                 <TableCell>
-              
-                  <Button onClick={() => {
-                            setSlectedValueUpdate(user);
-                            setOpenLearnerUpdate(true);
-                          }}>                
+                  <Button
+                    onClick={() => {
+                      setSlectedValueUpdate(user);
+                      setOpenLearnerUpdate(true);
+                    }}
+                  >
                     <AutoFixHighIcon />
                   </Button>
-                  
-                
                 </TableCell>
               </TableRow>
             ))}

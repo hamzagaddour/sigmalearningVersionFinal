@@ -11,7 +11,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/user";
 import Chip from "@mui/material/Chip";
-import Avatar from "@mui/material/Avatar";
 
 export default function ButtonAppBar() {
   const user = useSelector((state) => state.user.value);
@@ -45,17 +44,20 @@ export default function ButtonAppBar() {
     console.log(user)
     let admin = user.admin
     let teacher = user.teacher
+    let activer = user.activer
     console.log(admin)
     
     console.log(teacher)
-    if (admin === true) {
-      navigate("/admin");
-    } else if (teacher === true) {
-      navigate("/teacher");
-    } else if (admin && teacher === true) {
-      navigate("/admin");
-    } else {
-      navigate("/profile");
+    if (activer === true){
+      if (admin === true) {
+        navigate("/admin");
+      } else if (teacher === true) {
+        navigate("/teacher");
+      } else if (admin && teacher === true) {
+        navigate("/admin");
+      } else {
+        navigate("/profile");
+      }
     }
   };
 
@@ -103,20 +105,27 @@ export default function ButtonAppBar() {
               <>
                 <Chip
                   sx={{ margin: 1 }}
-                  label={user.firstName + " " + user.lastName}
+                  label={user.activer ? (user.firstName + " " + user.lastName) : ""}
                   color="primary"
                   component="a"
                   onClick={(e)=>handleRoute()}
                   variant="filled"
                   clickable
                 />
-                <Button
+                {user.activer ? (<Button
                   onClick={(e) => logoutHandler()}
                   variant="contained"
                   color="neutral"
                 >
                   Log Out
-                </Button>
+                </Button>) : (<Button
+                  href="/login"
+                  sx={{ margin: 1 }}
+                  variant="contained"
+                  color="neutral"
+                >
+                  Contact Sales
+                </Button>)}
               </>
             )}
           </ThemeProvider>

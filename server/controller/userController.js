@@ -102,6 +102,45 @@ exports.updateUser = (req, res) => {
     })
     .catch((err) => next(err));
 };
+//updateLearner
+exports.activerLearner = (req, res) => {
+  const user = new User();
+  user._id = req.body.id;
+  user.activer = req.body.activer
+  console.log(user);
+  //const {name,lastName,email, password} = req.body
+  var consditions = { _id: req.body.id };
+
+  User.updateOne(consditions, req.body)
+    .then((doc) => {
+      if (!doc) {
+        return res.status(404).end();
+      }
+      return res.status(200).json(doc);
+    })
+    .catch((err) => next(err));
+};
+
+//desactiverLearner
+exports.desactiverLearner = (req, res) => {
+  const user = new User();
+  user._id = req.body.id;
+  user.activer = req.body.activer
+  console.log(user);
+  //const {name,lastName,email, password} = req.body
+  var consditions = { _id: req.body.id };
+
+  User.updateOne(consditions, req.body)
+    .then((doc) => {
+      if (!doc) {
+        return res.status(404).end();
+      }
+      return res.status(200).json(doc);
+    })
+    .catch((err) => next(err));
+};
+
+
 
 //login user
 exports.login = (req, res) => {
