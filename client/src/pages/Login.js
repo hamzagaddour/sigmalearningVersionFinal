@@ -82,17 +82,19 @@ export default function SignIn() {
           })
         );
 
-        if (response.data.user.activer === true) {
-          if (response.data.user.admin === true) {
-            navigate("/admin");
-          } else if (response.data.user.teacher === true) {
-            navigate("/teacher");
-          } else {
-            navigate("/profile");
-          }
-        } 
+        if (response.data.user.activer !== true) {
+          alert('you must contact sales')
+        } else if (response.data.user.admin === true) {
+          navigate("/admin");
+        } else if (response.data.user.teacher === true) {
+          navigate("/teacher");
+        } else {
+          navigate("/profile");
+        }
       })
       .catch(function (error) {
+        alert('you have to sign up')
+        navigate('/register')
         console.log(error);
       });
   };
