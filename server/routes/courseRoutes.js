@@ -20,10 +20,18 @@ const {
         removeCourse,
         updateCourse,
         getCoursebyIdTeacher,
+        activerCourse,
+        desactiverCourse,
     } = require("../controller/courseController");
 
 
-router.get("/getcoursebyidteacher/:teacherId", getCoursebyIdTeacher)    
+//update statu of learner
+router.put("/activercoursebyid/:idCourse", activerCourse)//http://localhost:5000/api/updatecoursebyid/
+//update statu of learner
+router.put("/desactivercoursebyid/:idCourse", desactiverCourse)//http://localhost:5000/api/updatecoursebyid/
+
+router.get("/getcoursebyidteacher/:teacherId", getCoursebyIdTeacher) 
+   
 router.param("courseId", getCoursebyId); //param : parameter
 router.post("/course/create/",createCourse);  //http://localhost:5000/api/course/create/
 //router.post("/createcourse",upload.single('courseImage'),createCourse);

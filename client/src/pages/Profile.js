@@ -36,6 +36,8 @@ const Profile = () => {
         image: course.image,
         description: course.description,
         duration: course.duration,
+        idTeacher : course.idTeacher,
+        nameTeacher: course.nameTeacher,
       })
     );
     navigate("/course");

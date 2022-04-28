@@ -102,7 +102,10 @@ exports.updateUser = (req, res) => {
     })
     .catch((err) => next(err));
 };
-//updateLearner
+
+
+
+//activerLearner
 exports.activerLearner = (req, res) => {
   const user = new User();
   user._id = req.body.id;
@@ -185,6 +188,11 @@ exports.getAllLearner = (req, res) => {
   });
 };
 
+//get learner by teacher
+/*exports.getLearnerByTeacher = (req, res) => {
+
+}
+*/
 //getAllTeacher
 exports.getAllTeacher = (req, res) => {
   User.find({ teacher: true }).exec((error, userData) => {

@@ -18,7 +18,7 @@ import {
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Box } from "@mui/system";
-import DialogeUpdateCourse from './componentsTeacher/DialogUpdateCourse'
+import DialogeUpdateCourse from "./componentsTeacher/DialogUpdateCourse";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -29,20 +29,20 @@ const AdminListCourse = () => {
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
   const [selectedValueUpdate, setSelectedValueUpdate] = useState("");
-  const [openCourseUpdate ,setOpenCourseUpdate] = useState(false)
+  const [openCourseUpdate, setOpenCourseUpdate] = useState(false);
 
   const course = useSelector((state) => state.course.value);
-  const user = useSelector((state)=> state.user.value);
-  console.log(user._id)
-  console.log(course)
-  let teacherId = user._id
+  const user = useSelector((state) => state.user.value);
+  console.log(user);
+  console.log(course);
+  let teacherId = user._id;
+  let teacherName = user.firstName;
+  console.log(teacherName);
 
- useEffect(() => {
+  useEffect(() => {
     axios({
       method: "GET",
       url: "http://localhost:5000/api/getcoursebyidteacher/" + teacherId,
-      
-      
     })
       .then(function (response) {
         console.log(response);
@@ -75,6 +75,8 @@ const AdminListCourse = () => {
           image: image,
           description: description,
           duration: duration,
+          idTeacher: teacherId,
+          nameTeacher: teacherName,
         },
       })
         .then(function (response) {
@@ -187,9 +189,60 @@ const AdminListCourse = () => {
         console.log(error);
       });
   };
+
   const handleCloseUpdate = () => {
     setOpenCourseUpdate(false);
   };
+
+  function disableUser(courseId) {
+    console.log(courseId);
+    axios({
+      method: "PUT",
+      url: "http://localhost:5000/api/desactivercoursebyid/" + courseId,
+      data: {
+        id: courseId,
+        activer: false,
+      },
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  function enableUser(courseId) {
+    console.log(courseId);
+    axios({
+      method: "PUT",
+      url: "http://localhost:5000/api/activercoursebyid/" + courseId,
+      data: {
+        id: courseId,
+        activer: true,
+      },
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const handleSwitch = (course) => {
+    console.log("trigged course status updating");
+    console.log(course);
+
+    if (course.activer === true) {
+      console.log("trigger disable course action");
+      disableUser(course._id);
+    } else {
+      console.log("trigger activate course action");
+      enableUser(course._id);
+    }
+  };
+
   return (
     <>
       <>
@@ -206,17 +259,18 @@ const AdminListCourse = () => {
           open={open}
           onClose={handleClose}
         />
-              <DialogeUpdateCourse
-        selectedValueUpdate={selectedValueUpdate}
-        open={openCourseUpdate}
-        onClose={handleCloseUpdate}
-      />
+        <DialogeUpdateCourse
+          selectedValueUpdate={selectedValueUpdate}
+          open={openCourseUpdate}
+          onClose={handleCloseUpdate}
+        />
       </>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
+              <TableCell>Status</TableCell>
               <TableCell>Supprimer</TableCell>
               <TableCell>Modifier</TableCell>
             </TableRow>
@@ -225,18 +279,29 @@ const AdminListCourse = () => {
             {courses.map((course) => {
               let courseId = course._id;
               return (
-                <TableRow key={courseId} >
+                <TableRow key={courseId}>
                   <TableCell>{course.name}</TableCell>
+                  <TableCell key={course._id}>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={(e) => handleSwitch(course)}
+                    >
+                      {course.activer === true ? "DESACTIVER" : "ACTIVER"}
+                    </Button>
+                  </TableCell>
                   <TableCell>
                     <Button onClick={() => handleDelete(course._id)}>
                       <DeleteForeverIcon />
                     </Button>
                   </TableCell>
                   <TableCell>
-                    <Button onClick={() => {
-                            setSelectedValueUpdate(course);
-                            setOpenCourseUpdate(true);
-                          }}>
+                    <Button
+                      onClick={() => {
+                        setSelectedValueUpdate(course);
+                        setOpenCourseUpdate(true);
+                      }}
+                    >
                       <AutoFixHighIcon />
                     </Button>
                   </TableCell>

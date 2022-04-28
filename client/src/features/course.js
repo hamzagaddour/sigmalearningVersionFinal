@@ -8,7 +8,8 @@ export const courseSlice = createSlice({
         image :"",
         description : "",
         duration :"",
-        idTeacher : ""
+        idTeacher : "",
+        nameTeacher:"",
     }},
     reducers : {
         create: (state, action)=>{

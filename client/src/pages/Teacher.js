@@ -71,7 +71,7 @@ export default function PermanentDrawerLeft() {
         <Toolbar />
         <Divider />
         <List>
-          {["List Learner", "List Course"].map(
+          {[ "List Course"].map(
             (text, index) => (
               <ListItem button key={text}>
                 <ListItemIcon><ArrowForwardIosIcon/></ListItemIcon>

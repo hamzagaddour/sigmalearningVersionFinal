@@ -19,6 +19,7 @@ import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Box } from "@mui/system";
 import DialogeUpdateCourse from "../teacher/componentsTeacher/DialogUpdateCourse";
+import { useSelector } from "react-redux";
 
 const AdminListCourse = () => {
   const [courses, setCourses] = useState([]);
@@ -26,6 +27,8 @@ const AdminListCourse = () => {
   const [openCourseUpdate, setOpenCourseUpdate] = useState(false);
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
+  const course = useSelector((state) => state.course.value);
+  //console.log(course)
 
   useEffect(() => {
     axios
@@ -177,11 +180,60 @@ const AdminListCourse = () => {
   const handleCloseUpdate = () => {
     setOpenCourseUpdate(false);
   };
+  function disableUser(courseId) {
+    console.log(courseId);
+    axios({
+      method: "PUT",
+      url: "http://localhost:5000/api/desactivercoursebyid/" + courseId,
+      data: {
+        id: courseId,
+        activer: false,
+      },
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  function enableUser(courseId) {
+    console.log(courseId);
+    axios({
+      method: "PUT",
+      url: "http://localhost:5000/api/activercoursebyid/" + courseId,
+      data: {
+        id: courseId,
+        activer: true,
+      },
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const handleSwitch = (course) => {
+    console.log("trigged course status updating");
+    console.log(course);
+
+    if (course.activer === true) {
+      console.log("trigger disable course action");
+      disableUser(course._id);
+    } else {
+      console.log("trigger activate course action");
+      enableUser(course._id);
+    }
+  };
+
 
   return (
     <>
       <>
-        <Button
+        {/*<Button
           sx={{ margin: 3 }}
           variant="contained"
           onClick={() => setOpen(true)}
@@ -192,7 +244,7 @@ const AdminListCourse = () => {
           slectedValue={selectedValue}
           open={open}
           onClose={handleClose}
-        />
+        />*/}
         <DialogeUpdateCourse
           selectedValueUpdate={selectedValueUpdate}
           open={openCourseUpdate}
@@ -204,22 +256,31 @@ const AdminListCourse = () => {
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Duration</TableCell>
+              <TableCell>Teacher</TableCell>
+              <TableCell>Supprimer</TableCell>
+              <TableCell>Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {courses.map((course) => (
               <TableRow key={course._id}>
                 <TableCell>{course.name}</TableCell>
-                <TableCell>{course.description}</TableCell>
-                <TableCell>{course.duration}</TableCell>
+                <TableCell>{course.nameTeacher}</TableCell>
                 <TableCell>
                   <Button onClick={() => handleDelete(course._id)}>
                     <DeleteForeverIcon />
                   </Button>
                 </TableCell>
-                <TableCell>
+                <TableCell key={course._id}>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={(e) => handleSwitch(course)}
+                    >
+                      {course.activer === true ? "DESACTIVER" : "ACTIVER"}
+                    </Button>
+                  </TableCell>
+                {/*<TableCell>
                   <Button
                     onClick={() => {
                       setSelectedValueUpdate(course);
@@ -228,7 +289,7 @@ const AdminListCourse = () => {
                   >
                     <AutoFixHighIcon />
                   </Button>
-                </TableCell>
+                </TableCell>*/}
               </TableRow>
             ))}
           </TableBody>

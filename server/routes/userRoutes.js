@@ -22,6 +22,9 @@ router.put("/activerlearnerbyid/:idLearner", activerLearner)//http://localhost:5
 router.put("/desactiverlearnerbyid/:idLearner", desactiverLearner)//http://localhost:5000/api/updatelearnerbyid/
 //getallteacher
 router.get("/getallteacher", getAllTeacher)//http://localhost:5000/api/getallteacher
+
+//get learner by each teacher
+//router.get("getlearnerbyteacher", getLearnerByTeacher)
 //getalllearner
 router.get("/getalllearner", getAllLearner) //http://localhost:5000/api/getalllearner
 //GetAllUser

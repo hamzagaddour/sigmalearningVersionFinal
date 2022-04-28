@@ -26,6 +26,13 @@ const courseSchema = mongoose.Schema(
     },
     idTeacher : {
       type: String,
+    },
+    nameTeacher:{
+      type: String,
+    },
+    activer:{
+      type: Boolean,
+      default: false,
     }
   },
   {

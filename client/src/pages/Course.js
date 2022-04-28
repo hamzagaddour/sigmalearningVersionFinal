@@ -26,11 +26,13 @@ const Course = () => {
   const descriptionCourse = state.description;
   const durationCourse = state.duration;
   const idTeacher = state.idTeacher;
-    console.log(courseId)
+  const nameTeacher = state.nameTeacher;
+   /* console.log(courseId)
     console.log(nameCourse)
     console.log(descriptionCourse)
     console.log(durationCourse)
-    console.log(idTeacher)
+    console.log(idTeacher)*/
+    console.log(nameTeacher)
 
   const drawerWidth = 240;
   const dispatch = useDispatch();

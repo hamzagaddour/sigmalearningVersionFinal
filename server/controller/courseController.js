@@ -112,3 +112,42 @@ exports.updateCourse = (req, res) => {
     })
     .catch((err) => next(err));
 };
+
+
+//activer course
+exports.activerCourse = (req, res) => {
+  const course = new Course();
+  course._id = req.body.id;
+  course.activer = req.body.activer
+  console.log(course);
+  //const {name,lastName,email, password} = req.body
+  var consditions = { _id: req.body.id };
+
+  Course.updateOne(consditions, req.body)
+    .then((doc) => {
+      if (!doc) {
+        return res.status(404).end();
+      }
+      return res.status(200).json(doc);
+    })
+    .catch((err) => next(err));
+};
+
+//desactiver course
+exports.desactiverCourse = (req, res) => {
+  const course = new Course();
+  course._id = req.body.id;
+  course.activer = req.body.activer
+  console.log(course);
+  //const {name,lastName,email, password} = req.body
+  var consditions = { _id: req.body.id };
+
+  Course.updateOne(consditions, req.body)
+    .then((doc) => {
+      if (!doc) {
+        return res.status(404).end();
+      }
+      return res.status(200).json(doc);
+    })
+    .catch((err) => next(err));
+};
