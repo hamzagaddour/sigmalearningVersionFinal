@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useEffect} from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -47,8 +47,15 @@ export default function SignIn() {
       password: data.get("password"),
     });
 
+    
+      
+    
+
     let email = data.get("email");
     let password = data.get("password");
+
+    /*localStorage.setItem('email', JSON.stringify(email))
+    localStorage.setItem('password', JSON.stringify(password))*/
 
     axios({
       method: "POST",
@@ -63,6 +70,7 @@ export default function SignIn() {
 
         dispatch(
           login({
+            _id: response.data.user._id,
             firstName: response.data.user.name,
             lastName: response.data.user.lastName,
             email: email,

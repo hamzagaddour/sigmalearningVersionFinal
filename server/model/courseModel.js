@@ -24,6 +24,9 @@ const courseSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    idTeacher : {
+      type: String,
+    }
   },
   {
     timestamps: true,

@@ -19,9 +19,11 @@ const {
         getAllCourse,
         removeCourse,
         updateCourse,
+        getCoursebyIdTeacher,
     } = require("../controller/courseController");
 
-    
+
+router.get("/getcoursebyidteacher/:teacherId", getCoursebyIdTeacher)    
 router.param("courseId", getCoursebyId); //param : parameter
 router.post("/course/create/",createCourse);  //http://localhost:5000/api/course/create/
 //router.post("/createcourse",upload.single('courseImage'),createCourse);

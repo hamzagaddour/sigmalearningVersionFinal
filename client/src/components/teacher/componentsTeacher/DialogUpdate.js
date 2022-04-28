@@ -46,6 +46,7 @@ const DialogTest = (props) => {
         console.log(error);
       });
     onClose(selectedValueUpdate);
+
   };
 
   return (

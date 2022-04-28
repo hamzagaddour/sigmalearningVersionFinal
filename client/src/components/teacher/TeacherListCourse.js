@@ -20,6 +20,9 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Box } from "@mui/system";
 import DialogeUpdateCourse from './componentsTeacher/DialogUpdateCourse'
 
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+
 const AdminListCourse = () => {
   const [courses, setCourses] = useState([]);
 
@@ -28,18 +31,27 @@ const AdminListCourse = () => {
   const [selectedValueUpdate, setSelectedValueUpdate] = useState("");
   const [openCourseUpdate ,setOpenCourseUpdate] = useState(false)
 
+  const course = useSelector((state) => state.course.value);
+  const user = useSelector((state)=> state.user.value);
+  console.log(user._id)
+  console.log(course)
+  let teacherId = user._id
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/getallcourses")
-      .then((res) => {
-        console.log(res);
-        setCourses(res.data);
+ useEffect(() => {
+    axios({
+      method: "GET",
+      url: "http://localhost:5000/api/getcoursebyidteacher/" + teacherId,
+      
+      
+    })
+      .then(function (response) {
+        console.log(response);
+        setCourses(response.data);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(function (error) {
+        console.log(error);
       });
-  }, []);
+  }, [teacherId]);
 
   function SimpleDialog(props) {
     const [name, setName] = useState("");

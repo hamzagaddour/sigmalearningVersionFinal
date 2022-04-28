@@ -88,7 +88,7 @@ const AdminListLearner = () => {
       console.log('trigger activate user action')
       enableUser(learner._id)
     }
-    
+
   };
 
 
@@ -123,6 +123,7 @@ const AdminListLearner = () => {
           console.log(error);
         });
       onClose(selectedValue);
+
     };
 
     return (
@@ -225,6 +226,7 @@ const AdminListLearner = () => {
       .catch(function (error) {
         console.log(error);
       });
+      
   };
 
   const handleCloseUpdate = () => {

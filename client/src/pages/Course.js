@@ -18,7 +18,6 @@ import FileDownload from "js-file-download";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { create } from "../features/chapter";
-import { notInitialized } from "react-redux/es/utils/useSyncExternalStore";
 
 const Course = () => {
   const state = useSelector((state) => state.course.value);
@@ -26,10 +25,12 @@ const Course = () => {
   const nameCourse = state.name;
   const descriptionCourse = state.description;
   const durationCourse = state.duration;
-  /*console.log(courseId)
+  const idTeacher = state.idTeacher;
+    console.log(courseId)
     console.log(nameCourse)
     console.log(descriptionCourse)
-    console.log(durationCourse)*/
+    console.log(durationCourse)
+    console.log(idTeacher)
 
   const drawerWidth = 240;
   const dispatch = useDispatch();
@@ -57,7 +58,6 @@ const Course = () => {
   const download = (chapterId) => {
     console.log(chapterId);
     let idChapter = chapterId;
-    
 
     axios({
       method: "GET",
@@ -128,7 +128,6 @@ const Course = () => {
         variant="permanent"
         anchor="left"
       >
-        
         <Divider />
         <List>
           {chapters.map((chapter, index) => (
@@ -154,7 +153,12 @@ const Course = () => {
 
       <Box
         component="main"
-        sx={{ marginLeft: 35,flexGrow: 1, bgcolor: "background.default", p: 0 }}
+        sx={{
+          marginLeft: 35,
+          flexGrow: 1,
+          bgcolor: "background.default",
+          p: 0,
+        }}
       >
         <Toolbar />
         <Typography paragraph>
