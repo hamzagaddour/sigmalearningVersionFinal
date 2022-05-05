@@ -19,6 +19,8 @@ import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Box } from "@mui/system";
 import DialogeUpdateCourse from "./componentsTeacher/DialogUpdateCourse";
+import DialogListeLearnerByCourse from "./componentsTeacher/DialogListeLearnerByCourse";
+import { Link } from "@mui/material";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -30,6 +32,9 @@ const AdminListCourse = () => {
   const [selectedValue, setSelectedValue] = useState("");
   const [selectedValueUpdate, setSelectedValueUpdate] = useState("");
   const [openCourseUpdate, setOpenCourseUpdate] = useState(false);
+
+  const [slectedValueListeLearner, setSlectedValueListeLearner] = useState("");
+  const [openLearnerListe, setOpenLearnerListe] = useState(false);
 
   const course = useSelector((state) => state.course.value);
   const user = useSelector((state) => state.user.value);
@@ -243,6 +248,10 @@ const AdminListCourse = () => {
     }
   };
 
+  const handleCloseLeanerliste = () => {
+    setOpenLearnerListe(false);
+  };
+
   return (
     <>
       <>
@@ -264,6 +273,11 @@ const AdminListCourse = () => {
           open={openCourseUpdate}
           onClose={handleCloseUpdate}
         />
+        <DialogListeLearnerByCourse
+          slectedValueListeLearner={slectedValueListeLearner}
+          open={openLearnerListe}
+          onClose={handleCloseLeanerliste}
+        />
       </>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
@@ -280,7 +294,16 @@ const AdminListCourse = () => {
               let courseId = course._id;
               return (
                 <TableRow key={courseId}>
-                  <TableCell>{course.name}</TableCell>
+                  <TableCell>
+                    <Link
+                      onClick={() => {
+                        setSlectedValueListeLearner(course);
+                        setOpenLearnerListe(true);
+                      }}
+                    >
+                      {course.name}
+                    </Link>
+                  </TableCell>
                   <TableCell key={course._id}>
                     <Button
                       variant="outlined"

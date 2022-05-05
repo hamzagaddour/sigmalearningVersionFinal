@@ -20,19 +20,24 @@ import { useDispatch } from "react-redux";
 import { create } from "../features/chapter";
 
 const Course = () => {
-  const state = useSelector((state) => state.course.value);
-  const courseId = state.id;
-  const nameCourse = state.name;
-  const descriptionCourse = state.description;
-  const durationCourse = state.duration;
-  const idTeacher = state.idTeacher;
-  const nameTeacher = state.nameTeacher;
+  const course = useSelector((state) => state.course.value);
+  const user = useSelector((state) => state.user.value);
+
+  //console.log(user)
+  //console.log(course.learners)
+
+  const courseId = course.id;
+  const nameCourse = course.name;
+  const descriptionCourse = course.description;
+  const durationCourse = course.duration;
+  const idTeacher = course.idTeacher;
+  const nameTeacher = course.nameTeacher;
    /* console.log(courseId)
     console.log(nameCourse)
     console.log(descriptionCourse)
     console.log(durationCourse)
-    console.log(idTeacher)*/
-    console.log(nameTeacher)
+    console.log(idTeacher)
+    console.log(nameTeacher)*/
 
   const drawerWidth = 240;
   const dispatch = useDispatch();

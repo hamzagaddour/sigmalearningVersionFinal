@@ -83,7 +83,7 @@ export default function SignIn() {
         );
 
         if (response.data.user.activer !== true) {
-          alert('you must contact sales')
+          alert('Email Not activate.. you must contact sales')
         } else if (response.data.user.admin === true) {
           navigate("/admin");
         } else if (response.data.user.teacher === true) {
@@ -93,9 +93,9 @@ export default function SignIn() {
         }
       })
       .catch(function (error) {
-        alert('you have to sign up')
+        alert('Email Wrong.. you have to sign up')
         navigate('/register')
-        console.log(error);
+        console.log(error.error);
       });
   };
 

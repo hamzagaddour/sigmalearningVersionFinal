@@ -26,6 +26,38 @@ exports.createCourse = (req, res) => {
   });
 };
 
+//add learner to course
+exports.addLearnerToCourse = (req, res) => {
+  console.log(req.body)
+  const course = new Course();
+  course.learners = req.body.learners;
+  console.log(course);
+
+  var consditions = { _id: req.body._id };
+
+  Course.updateOne(consditions, req.body)
+    .then((doc) => {
+      if (!doc) {
+        return res.status(404).end();
+      }
+      return res.status(200).json(doc);
+    })
+    .catch((err) => next(err));
+  
+}
+
+// get course activer 
+exports.getCourseActiver = (req, res) => {
+
+  Course.find({ activer : true }, (error, data) => {
+    if (error || !Course) {
+      return res.status(400).json({
+        error: "Course Does Not Exists",
+      });
+    }
+    return res.status(200).json(data);
+  });
+}
 // to read all course
 exports.getAllCourse = (req, res) => {
   Course.find().exec((error, courseData) => {
@@ -151,3 +183,25 @@ exports.desactiverCourse = (req, res) => {
     })
     .catch((err) => next(err));
 };
+
+// get learners from course
+exports.getAllLearners = (req, res) => {
+  Course.find().exec((error, courseData) => {
+    if (error) {
+      return res.status(400).json({
+        error: "No Courses Found",
+      });
+    }
+    
+    var learners = []
+    courseData.map((e)=>{
+      return(
+        learners.push(e.learners)
+      )
+    })
+    console.log(learners)
+    res.json(learners)
+
+    
+  });
+}

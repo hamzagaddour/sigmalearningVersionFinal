@@ -10,6 +10,7 @@ export const courseSlice = createSlice({
         duration :"",
         idTeacher : "",
         nameTeacher:"",
+        learners: [],
     }},
     reducers : {
         create: (state, action)=>{

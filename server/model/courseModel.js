@@ -5,24 +5,20 @@ const courseSchema = mongoose.Schema(
     name: {
       type: String,
       trim: true,
-      required: true,
       unique: true,
       maxlength: 64,
     },
     image: {
       type: String,
-      required: true,
     },
     description: {
       type: String,
       trim: true,
-      required: true,
       maxlength: 6000,
     },
     
     duration: {
       type: String,
-      required: true,
     },
     idTeacher : {
       type: String,
@@ -33,6 +29,9 @@ const courseSchema = mongoose.Schema(
     activer:{
       type: Boolean,
       default: false,
+    },
+    learners : {
+      type : Array,
     }
   },
   {

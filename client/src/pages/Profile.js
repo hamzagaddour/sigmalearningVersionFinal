@@ -8,26 +8,35 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { create } from "../features/course";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const [courses, setCourses] = useState([]);
+
+  var learnersFromBackEnd = [];
+  const user = useSelector((state) => state.user.value);
+  const course = useSelector((state) => state.course.value);
+  //console.log(course)
+  //console.log(user)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/getallcourses")
-      .then((res) => {
-        console.log(res);
-        setCourses(res.data);
+    axios({
+      method: "GET",
+      url: "http://localhost:5000/api/getcourseactiver/",
+    })
+      .then(function (response) {
+        //console.log(response);
+        setCourses(response.data);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(function (error) {
+        console.log(error);
       });
   }, []);
 
   const handleCourse = (course) => {
-    console.log(course);
+    //console.log(course);
 
     dispatch(
       create({
@@ -36,10 +45,12 @@ const Profile = () => {
         image: course.image,
         description: course.description,
         duration: course.duration,
-        idTeacher : course.idTeacher,
+        idTeacher: course.idTeacher,
         nameTeacher: course.nameTeacher,
+        learners: course.learners.push(user._id),
       })
     );
+
     navigate("/course");
   };
 

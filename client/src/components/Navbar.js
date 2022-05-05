@@ -16,7 +16,7 @@ export default function ButtonAppBar() {
   const user = useSelector((state) => state.user.value);
   const logged = user.logged;
   //const name = user.email;
-  console.log(user);
+ // console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

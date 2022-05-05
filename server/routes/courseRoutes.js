@@ -22,8 +22,17 @@ const {
         getCoursebyIdTeacher,
         activerCourse,
         desactiverCourse,
+        getCourseActiver,
+        addLearnerToCourse,
+        getAllLearners,
     } = require("../controller/courseController");
 
+//get all learners
+router.get("/getalllearners", getAllLearners)
+//add Learner to Course table
+router.put("/addlearnertocourse/", addLearnerToCourse)
+//get course activer
+router.get("/getcourseactiver/",getCourseActiver)
 
 //update statu of learner
 router.put("/activercoursebyid/:idCourse", activerCourse)//http://localhost:5000/api/updatecoursebyid/
